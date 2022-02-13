@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    font-size: 50px;
+    color: #FBDE44FF;
+}
+
+.calculator {
+    width: 400px;
+    height: 575px;
+    background-color: #808186;
+    border: 2px solid black;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.top {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.display {
+    background-color: #d7e2ee;
+    width: 320px;
+    height: 110px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    text-align:right;
+}
+
+.expression {
+    margin: 0;
+    font-size: 30px;
+    height: 35px;
+}
+
+.input {
+    margin: 0;
+    margin-bottom: 0;
+    font-size: 50px;
+    height: 79px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.middle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 13px;
+    gap: 12px;
+}
+
+.middle button {
+    background-color: #DF1F2D;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 176px;
+    height: 60px;
+    font-size: 20px;
+}
+
+.middle button:hover {
+    background-color: #B11313;
+}
+
+.middle button:active {
+    background-color: #DF1F2D;
+}
+
+.bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 380px;
+    height: 290px;
+    gap: 13px;
+}
+
+.bottom button {
+    background-color: #447BBE;
+    width: 81px;
+    height: 62px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.bottom button:hover {
+    background-color: #2B3784;
+}
+
+.bottom button:active {
+    background-color: #447BBE;
+}
+
+
+/*The footer*/
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.footer-link {
+    text-decoration: none;
+    font-weight: bold;
+}
