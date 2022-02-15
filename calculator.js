@@ -11,11 +11,12 @@ let inputString = "";
 let expresionString = "";
 let operatorString = "";
 let operator;
-let newOperator;  //Works for when you want to ececute the expresion by operator
+let newOperator;  //Works for when you want to execute the expresion by operator
 let numberA;
 let numberB;
 let solution;
 let operatorClick = false;
+let equalClick = false;
 
 function add(a, b){
     return a+b;
@@ -72,6 +73,18 @@ operatorButtons.forEach((button) => {
             }
         }
 
+        if(equalClick == true){
+            expresion.textContent = solution + operatorString;
+        }
+
+        if(numberA){
+            numberB = parseInt(inputString);
+            newOperator = operator;
+        }
+        else {
+            numberA = parseInt(inputString);
+        }
+
         if(numberA && numberB){
             solution = operate(newOperator, numberA, numberB);
             expresion.textContent = solution+operatorString;
@@ -82,27 +95,32 @@ operatorButtons.forEach((button) => {
         
         inputString = "";
         operatorClick = true;
-        
+        equalClick = false;
     });
 });
 
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        inputString += button.textContent;
+        if(inputString != ""){
+            inputString += button.textContent;
+        }
+        else{
+            inputString = button.textContent;
+        }
         input.textContent = inputString;
-        if(numberA){
-            numberB = parseInt(inputString);
-            //xpresion.textContent = solution+operator;
-            newOperator = operator;
-        }
-        else {
-            numberA = parseInt(inputString);
-        }
         operatorClick = false;
     });
 });
 
 equalButton.addEventListener('click', () => {
+    if(numberA){
+        numberB = parseInt(inputString);
+        newOperator = operator;
+    }
+    else {
+        numberA = parseInt(inputString);
+    }
+
     if(numberA && numberB){
         solution = operate(newOperator, numberA, numberB);
         expresion.textContent = numberA + operatorString + numberB + equalButton.textContent;
@@ -113,15 +131,20 @@ equalButton.addEventListener('click', () => {
 
     inputString = "";
     operatorClick = true;
+    equalClick = true;
 });
 
 clearButton.addEventListener('click', () => {
-    inputString = "";
-    expresionString = "";
     input.textContent = 0;
     expresion.textContent = "";
-    numberA = "";
-    numberB = "";
+    inputString = "";
+    expresionString = "";
+    operatorString = "";
+    operator = undefined;
+    newOperator = undefined;
+    numberB = undefined;
+    solution = undefined;
     operatorClick = false;
+    equalClick = false;
 });
 
