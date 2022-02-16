@@ -10,13 +10,17 @@ const expresion = document.querySelector('.expression');
 let inputString = "";
 let expresionString = "";
 let operatorString = "";
+let decimalString = "";
 let operator;
+let decimal;
 let newOperator;  //Works for when you want to execute the expresion by operator
 let numberA;
 let numberB;
 let solution;
 let operatorClick = false;
 let equalClick = false;
+let decimalClick = false;
+let floatCheck = false
 
 function add(a, b){
     return a+b;
@@ -49,15 +53,103 @@ function operate(operator, a, b){
     }
 }
 
-function equals(a, b){
-
+function parseInput(numberString){
+    numberStringList = numberString.split("")
+    if(numberStringList.includes(".")){
+        return parseFloat(numberString);
+    }
+    else{
+        return parseInt(numberString);
+    }
 }
+
+clearButton.addEventListener('click', () => {
+    input.textContent = 0;
+    expresion.textContent = "";
+    inputString = "";
+    expresionString = "";
+    operatorString = "";
+    decimalString = "";
+    operator = undefined;
+    decimal = undefined;
+    newOperator = undefined;
+    numberA = undefined;
+    numberB = undefined;
+    solution = undefined;
+    operatorClick = false;
+    equalClick = false;
+    decimalClick = false;
+    floatCheck = false;
+});
+
+deleteButton.addEventListener('click', () => {
+    inputList = inputString.split("")
+    inputList.pop();
+    if(inputList.length == 0){
+        inputString = "";
+        input.textContent = "0";
+    }
+    else{
+        inputString = inputList.join("");
+        input.textContent = inputString;
+    }
+});
+
+equalButton.addEventListener('click', () => {
+    if(Number.isFinite(numberA)){
+        numberB = parseInput(inputString);
+        newOperator = operator;
+    }
+    else {
+        numberA = parseInput(inputString);
+    }
+
+    if(Number.isFinite(numberA) && Number.isFinite(numberB)){
+        let floatCheck
+        if(floatCheck == true){
+            solution = Math.round(operate(newOperator, numberA, numberB)*1000000000000)/1000000000000;
+        }
+        else{
+            solution = operate(newOperator, numberA, numberB);
+        }
+        expresion.textContent = numberA + operatorString + numberB + equalButton.textContent;
+        input.textContent = solution;
+        numberA = solution;
+        numberB = "";
+    }
+
+    inputString = "";
+    operatorClick = true;
+    equalClick = true;
+    decimalClick = false;
+});
+
+decimalButton.addEventListener('click', () => {
+    if(decimalClick == false){
+        decimal = decimalButton.id;
+        decimalString = decimalButton.textContent;
+        inputString += decimalString;
+        input.textContent += decimalString;
+        decimalClick = true; 
+        floatCheck = true;
+    }
+});
+
+numberButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if(inputString != ""){
+            inputString += button.textContent;
+        }
+        else{
+            inputString = button.textContent;
+        }
+        input.textContent = inputString;
+        operatorClick = false;
+    });
+});
 
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        //I think the key here is to check for certain conditions
-        //First check may just need to see if the expression string is empty
-        
         operator = button.id;
         operatorString = button.textContent;
 
@@ -77,16 +169,21 @@ operatorButtons.forEach((button) => {
             expresion.textContent = solution + operatorString;
         }
 
-        if(numberA){
-            numberB = parseInt(inputString);
+        if(Number.isFinite(numberA)){
+            numberB = parseInput(inputString);
             newOperator = operator;
         }
         else {
-            numberA = parseInt(inputString);
+            numberA = parseInput(inputString);
         }
 
-        if(numberA && numberB){
-            solution = operate(newOperator, numberA, numberB);
+        if(Number.isFinite(numberA) && Number.isFinite(numberB)){
+            if(floatCheck == true){
+                solution = Math.round(operate(newOperator, numberA, numberB)*1000000000000)/1000000000000;
+            }
+            else{
+                solution = operate(newOperator, numberA, numberB);
+            }
             expresion.textContent = solution+operatorString;
             input.textContent = solution;
             numberA = solution;
@@ -96,55 +193,7 @@ operatorButtons.forEach((button) => {
         inputString = "";
         operatorClick = true;
         equalClick = false;
+        decimalClick = false;
     });
-});
-
-numberButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        if(inputString != ""){
-            inputString += button.textContent;
-        }
-        else{
-            inputString = button.textContent;
-        }
-        input.textContent = inputString;
-        operatorClick = false;
-    });
-});
-
-equalButton.addEventListener('click', () => {
-    if(numberA){
-        numberB = parseInt(inputString);
-        newOperator = operator;
-    }
-    else {
-        numberA = parseInt(inputString);
-    }
-
-    if(numberA && numberB){
-        solution = operate(newOperator, numberA, numberB);
-        expresion.textContent = numberA + operatorString + numberB + equalButton.textContent;
-        input.textContent = solution;
-        numberA = solution;
-        numberB = "";
-    }
-
-    inputString = "";
-    operatorClick = true;
-    equalClick = true;
-});
-
-clearButton.addEventListener('click', () => {
-    input.textContent = 0;
-    expresion.textContent = "";
-    inputString = "";
-    expresionString = "";
-    operatorString = "";
-    operator = undefined;
-    newOperator = undefined;
-    numberB = undefined;
-    solution = undefined;
-    operatorClick = false;
-    equalClick = false;
 });
 
